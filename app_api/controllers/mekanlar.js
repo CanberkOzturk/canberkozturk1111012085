@@ -158,7 +158,7 @@ const mekanSil = function (req, res) {
                     cevapOlustur(res, 404, hata);
                     return;
                 }
-                cevapOlustur(res, 200, null);
+                cevapOlustur(res, 204, null);
             }
         );
     }

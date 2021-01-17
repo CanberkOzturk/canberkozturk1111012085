@@ -28,7 +28,7 @@ const yorumEkle = function (req, res) {
     }
 };
 const yorumGetir = function (req, res) {
-    if (req.params && req.params.mekanid & req.params.yorumid) {
+    if (req.params && req.params.mekanid && req.params.yorumid) {
         Mekan.findById(req.params.mekanid)
             .select('ad yorumlar')
             .exec(
@@ -58,6 +58,9 @@ const yorumGetir = function (req, res) {
                             cevapOlustur(res, 200, cevap);
                         }
                     }
+                    else{
+                        cevapOlustur(res, 404, {"mesaj":"Hiç yorum yok"});
+                    }
                 }
             );
     }
@@ -66,7 +69,7 @@ const yorumGetir = function (req, res) {
     }
 };
 const yorumGuncelle = function (req, res) {
-    if(!req.params.mekanid || req.params.yorumid){
+    if(!req.params.mekanid || !req.params.yorumid){
         cevapOlustur(res, 404, {"mesaj": "Bulunamadı. mekanid ve yorumid zorunlu."});
         return;
     }

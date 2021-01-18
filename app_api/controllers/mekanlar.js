@@ -1,11 +1,11 @@
-var mongoose = require('mongoose');
-var Mekan = mongoose.model('mekan');
+var mongoose=require('mongoose')
+var Mekan=mongoose.model('mekan')
+const cevapOlustur=function(res,status,content){
+	res
+	.status(status)
+	.json(content)
 
-const cevapOlustur = function (res, status, content) {
-    res
-        .status(status)
-        .json(content);
-};
+}
 
 const mekanlariListele = async (req, res) => {
     var boylam = parseFloat(req.query.boylam);
@@ -81,23 +81,23 @@ const mekanEkle = function (req, res) {
     );
 }
 
-const mekanGetir = function (req, res) {
-    if (req.params && req.params.mekanid) {
-        Mekan.findById(req.params.mekanid)
-            .exec(
-                function (hata, mekan) {
-                    if (!mekan) {
-                        cevapOlustur(res, 404, { "durum": "Bulunamadı. mekanid bulunamadı" });
-                        return;
-                    }
-                    else if (hata) {
-                        cevapOlustur(res, 404, hata);
-                        return;
-                    }
-                    cevapOlustur(res, 200, mekan);
-                }
-            );
-    }
+const mekanGetir=function(req, res) {
+	if(req.params&&req.params.mekanid){
+		Mekan.findById(req.params.mekanid)
+		.exec(function(hata,mekan){
+			if(!mekan){
+				cevapOlustur(res,404,{"durum":"mekanid bulunamadı"});
+				return;
+			}
+			else if(hata){
+				cevapOlustur(res,404,hata);
+			}
+			cevapOlustur(res,200,mekan)
+		}
+		)
+	}
+	else
+		cevapOlustur(res,404,{"durum":"istekte mekanid yok!"})
 }
 
 const mekanGuncelle = function (req, res) {
@@ -165,11 +165,12 @@ const mekanSil = function (req, res) {
     else{
         cevapOlustur(res, 404, {"mesaj":"mekanid bulunamadı"});
     }
-};
-module.exports = {
-    mekanlariListele,
-    mekanEkle,
-    mekanGetir,
-    mekanGuncelle,
-    mekanSil
-};
+}
+
+module.exports={
+	mekanlariListele,
+	mekanEkle,
+	mekanGetir,
+	mekanSil,
+	mekanGuncelle
+}
